@@ -101,7 +101,7 @@ function deleteBlogPost(e) {
     ajax.open(`DELETE`, `https://jsonplaceholder.typicode.com/posts/1`, true);
 
     // Defining that the data type being sent to the server is JSON
-    ajax.setRequestHeader(`Content-Type`, `application/json`);
+    // ajax.setRequestHeader(`Content-Type`, `application/json`);
 
     // Creating a JavaScript Object with the updated post title
     // let deletePostTitle = document.getElementById(`deletePostTitle`).value;
@@ -135,11 +135,18 @@ function getBlogPosts(e) {
 
         // If the request is done and an error has not occurred, it will print all blog posts on the page
         if(this.readyState === 4 && this.status === 200) {
-            console.log(this.responseText);
             let postObject = JSON.parse(this.responseText);
             for (let i = 0; i < postObject.length; i++) {
+                let postId = `<p>Id: ${postObject[i].id}</p>`;
+                let postUserId = `<p>UserId: ${postObject[i].userId}</p>`;
+                let postTitle = `<p>Title: ${postObject[i].title}</p>`;
+                let postBody = `<p> Post: ${postObject[i].body}</p>`;
+
                 let postContainer = document.getElementById(`postContainer`);
-                postContainer.innerText += postObject[i].title;
+                postContainer.innerHTML += postId;
+                postContainer.innerHTML += postUserId;
+                postContainer.innerHTML += postTitle;
+                postContainer.innerHTML += postBody;
             }
         }
     }
