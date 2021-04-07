@@ -183,12 +183,6 @@ function getBlogPosts(e) {
                 eachPostContainer.innerHTML += postTitle;
                 eachPostContainer.innerHTML += postBody;
                 allPostsContainer.appendChild(eachPostContainer);
-
-                let postComments = document.getElementsByClassName(`comment`);
-                let eachPost = document.getElementsByClassName(`post`);
-                for(let i = 0; i < postComments; i++) {
-                    eachPost[i].append(postComments[i]);
-                }
             }
 
             let getPostStatus = document.getElementById(`getPostStatus`);
@@ -236,7 +230,9 @@ function getPostComments() {
             
             let commentsObject = JSON.parse(this.responseText);
 
-            for (let i = 0; i < commentsObject.length; i++) {
+            let post = document.getElementsByClassName(`post`);
+
+            for (let i = 0; i < post.length; i++) {
                 let commentsPostId = `<p>PostId: ${commentsObject[i].postId}</p>`;
                 let commentsId = `<p>Id: ${commentsObject[i].id}</p>`;
                 let commentsName = `<p>Name: ${commentsObject[i].name}</p>`;
@@ -250,12 +246,14 @@ function getPostComments() {
                 eachCommentContainer.innerHTML += commentsName;
                 eachCommentContainer.innerHTML += commentsEmail;
                 eachCommentContainer.innerHTML += commentsBody;
+
+                post[i].append(eachCommentContainer);
             }
         }
     }
 
     // Configuring the request with the type and URL
-    ajax.open(`GET`, `https://jsonplaceholder.typicode.com/posts/1/comments`, true);
+    ajax.open(`GET`, `https://jsonplaceholder.typicode.com/comments`, true);
 
     // Sending the request
     ajax.send();
