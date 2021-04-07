@@ -43,7 +43,7 @@ function createBlogPost(e) {
         userId: 1
     };
     
-    // Converting the JavaScript Object into a JSON format
+    // Converting the JavaScript object into a JSON format
     let postJSON = JSON.stringify(postObject);
 
     // Sending the request
@@ -91,12 +91,10 @@ function updateBlogPost(e) {
     // Defining that the data type being sent to the server is JSON
     ajax.setRequestHeader(`Content-Type`, `application/json`);
 
-    // Creating a JavaScript Object with the updated post title and body
+    // Creating a JavaScript object with the updated post title
     let updatePostTitle = document.getElementById(`updatePostTitle`).value;
-    let updatePostBody = document.getElementById(`updatePostBody`).value;
     let updatePostObject = {
-        title: updatePostTitle,
-        body: updatePostBody
+        title: updatePostTitle
     };
     
     // Converting the JavaScript Object into a JSON format
@@ -106,7 +104,7 @@ function updateBlogPost(e) {
     ajax.send(updatePostJSON);
 }
 
-// Adding a click event to the update post button and calling the function to update user data to the server
+// Adding a click event to the update post button and calling the function to update the user's data to the server
 let updatePostButton = document.getElementById(`updatePostButton`);
 updatePostButton.addEventListener(`click`, updateBlogPost);
 
@@ -163,7 +161,7 @@ function getBlogPosts(e) {
     // Creating a function that must be called when the network request is done and no errors have occurred
     ajaxGetRequest.onreadystatechange = function() {
 
-        // If the request is done and there are no errors, excute the following code
+        // If the request is done and there are no errors, execute the following code
         if(this.readyState === 4 && this.status === 200) {
 
             // Converting the returned JSON formatted data into a JavaScript (JS) object
@@ -231,16 +229,16 @@ function getPostComments() {
     // Creating a function that must be called when the network request is done and no errors have occurred
     ajax.onreadystatechange = function() {
 
-        // If the request is done and there are no errors, excute the following code
+        // If the request is done and there are no errors, execute the following code
         if(this.readyState === 4 && this.status === 200) {
             
             // Converting the returned JSON formatted data into a JS object
             let commentsObject = JSON.parse(this.responseText);
 
-            // Getting the each post sub-containers
+            // Getting the all post sub-containers
             let post = document.getElementsByClassName(`post`);
 
-            // Since the comments array length is greater than post array length, the conditional will only run when the counter is less than the post array lengh. This ensures that the same number of comments and posts are being printed to the user. It will error if the comment array length is used.
+            // Since the comments array length is greater than post array length, the conditional will only run when the counter is less than the post array length. This ensures that the same number of comments and posts are being printed to the user. It will error if the comment array length is used.
             for (let i = 0; i < post.length; i++) {
 
                 // Storing each value from the JS object into a variable
@@ -250,7 +248,7 @@ function getPostComments() {
                 let commentsEmail = `<p>Email: ${commentsObject[i].email}</p>`;
                 let commentsBody = `<p>Body: ${commentsObject[i].body}</p>`;
 
-                // Creating sub-containers to group each comment, adding a class to each sub-container
+                // Creating sub-containers to group each comment, adding a class to each comment sub-container
                 let eachCommentContainer = document.createElement(`div`);
                 eachCommentContainer.classList.add(`comment`);
                 eachCommentContainer.innerHTML += commentsPostId;
