@@ -157,25 +157,38 @@ deletePostButton.addEventListener(`click`, deleteBlogPost);
 function getBlogPosts(e) {
 
     // Starting an AJAX request
-    let ajax = new XMLHttpRequest();
+    let ajaxGetRequest = new XMLHttpRequest();
 
     // Creating a function that must be called when the network request is done and no errors have occurred
-    ajax.onreadystatechange = function() {
+    ajaxGetRequest.onreadystatechange = function() {
 
-        // If the request is done and an error has not occurred, print all blog posts on the page
+        // If the request is done and an error has not occurred
         if(this.readyState === 4 && this.status === 200) {
+
+            // Converting the returned JSON data type into a JavaScript (JS) Object
             let postObject = JSON.parse(this.responseText);
+
+            // Storing each value from the JS object into a variable
             for (let i = 0; i < postObject.length; i++) {
                 let postId = `<p>Id: ${postObject[i].id}</p>`;
                 let postUserId = `<p>UserId: ${postObject[i].userId}</p>`;
                 let postTitle = `<p>Title: ${postObject[i].title}</p>`;
-                let postBody = `<p> Post: ${postObject[i].body}</p>`;
+                let postBody = `<p>Body: ${postObject[i].body}</p>`;
 
-                let postContainer = document.getElementById(`postContainer`);
-                postContainer.innerHTML += postId;
-                postContainer.innerHTML += postUserId;
-                postContainer.innerHTML += postTitle;
-                postContainer.innerHTML += postBody;
+                let allPostsContainer = document.getElementById(`allPostsContainer`);
+                let eachPostContainer = document.createElement(`div`);
+                eachPostContainer.classList.add(`post`);
+                eachPostContainer.innerHTML += postId;
+                eachPostContainer.innerHTML += postUserId;
+                eachPostContainer.innerHTML += postTitle;
+                eachPostContainer.innerHTML += postBody;
+                allPostsContainer.appendChild(eachPostContainer);
+
+                let postComments = document.getElementsByClassName(`comment`);
+                let eachPost = document.getElementsByClassName(`post`);
+                for(let i = 0; i < postComments; i++) {
+                    eachPost[i].append(postComments[i]);
+                }
             }
 
             let getPostStatus = document.getElementById(`getPostStatus`);
@@ -196,15 +209,57 @@ function getBlogPosts(e) {
     }
 
     // Configuring the request with the type and URL
-    ajax.open(`GET`, `https://jsonplaceholder.typicode.com/posts`, true);
+    ajaxGetRequest.open(`GET`, `https://jsonplaceholder.typicode.com/posts`, true);
 
-    // Defining that the data type being sent to the server is JSON
-    ajax.setRequestHeader(`Content-Type`, `application/json`);
+    // Sending the request
+    ajaxGetRequest.send();
+}
+
+// Adding a load event to the window and calling the function to update user data to the server
+// Note to Alex: I could just take the code out of the function so it can render on the page automatically but I decided to add an event listener to the window instead because in the notes, it says not to make ajax a global variable and it's always better to make it a local variable
+window.addEventListener(`load`, getBlogPosts);
+
+
+// ---------- BONUS: COMMENTS ----------
+
+// Creating a function that will be called as soon as the page is loaded
+function getPostComments() {
+
+    // Starting an AJAX request
+    let ajax = new XMLHttpRequest();
+
+    // Creating a function that must be called when the network request is done and no errors have occurred
+    ajax.onreadystatechange = function() {
+
+        // If the request is done and an error has not occurred, print all blog posts on the page
+        if(this.readyState === 4 && this.status === 200) {
+            
+            let commentsObject = JSON.parse(this.responseText);
+
+            for (let i = 0; i < commentsObject.length; i++) {
+                let commentsPostId = `<p>PostId: ${commentsObject[i].postId}</p>`;
+                let commentsId = `<p>Id: ${commentsObject[i].id}</p>`;
+                let commentsName = `<p>Name: ${commentsObject[i].name}</p>`;
+                let commentsEmail = `<p>Email: ${commentsObject[i].email}</p>`;
+                let commentsBody = `<p>Body: ${commentsObject[i].body}</p>`;
+
+                let eachCommentContainer = document.createElement(`div`);
+                eachCommentContainer.classList.add(`comment`);
+                eachCommentContainer.innerHTML += commentsPostId;
+                eachCommentContainer.innerHTML += commentsId;
+                eachCommentContainer.innerHTML += commentsName;
+                eachCommentContainer.innerHTML += commentsEmail;
+                eachCommentContainer.innerHTML += commentsBody;
+            }
+        }
+    }
+
+    // Configuring the request with the type and URL
+    ajax.open(`GET`, `https://jsonplaceholder.typicode.com/posts/1/comments`, true);
 
     // Sending the request
     ajax.send();
 }
 
 // Adding a load event to the window and calling the function to update user data to the server
-// Note to Alex: I could just take the code out of the function so it can render on the page automatically but I decided to add an event listener to the window instead because in the notes, it says not to make ajax a global variable and it's always better to make it a local variable
-window.addEventListener(`load`, getBlogPosts);
+window.addEventListener(`load`, getPostComments);
