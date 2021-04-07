@@ -156,10 +156,10 @@ deletePostButton.addEventListener(`click`, deleteBlogPost);
 function getBlogPosts(e) {
 
     // Starting an AJAX request
-    let ajaxGetRequest = new XMLHttpRequest();
+    let ajax = new XMLHttpRequest();
 
     // Creating a function that must be called when the network request is done and no errors have occurred
-    ajaxGetRequest.onreadystatechange = function() {
+    ajax.onreadystatechange = function() {
 
         // If the request is done and there are no errors, execute the following code
         if(this.readyState === 4 && this.status === 200) {
@@ -207,10 +207,10 @@ function getBlogPosts(e) {
     }
 
     // Configuring the request with the type and URL
-    ajaxGetRequest.open(`GET`, `https://jsonplaceholder.typicode.com/posts`, true);
+    ajax.open(`GET`, `https://jsonplaceholder.typicode.com/posts`, true);
 
     // Sending the request
-    ajaxGetRequest.send();
+    ajax.send();
 }
 
 // Adding a load event to the window and calling the function to print all posts on the page
