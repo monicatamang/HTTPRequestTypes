@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <header>
@@ -14,45 +15,35 @@
         <article>
             <h1>POST</h1>
             <form action="javascript:void(0)">
-                <input type="text" id="postTitle" placeholder="Title">
-                <br>
-                <textarea type="text" id="postBody" rows="5" columns="50"placeholder="Post"></textarea>
-                <br>
-                <input type="submit" id="sendPostButton" value="Send Post">
+                <input type="text" class="textBoxTitle" id="postTitle" placeholder="Title">
+                <textarea type="text" id="postBody" placeholder="Post"></textarea>
+                <input type="submit" class="submitButton" id="sendPostButton" value="Send Post">
             </form>
             <p id="sendPostStatus"></p>
         </article>
         <article>
             <h1>PATCH</h1>
             <form action="javascript:void(0)">
-                <input type="text" id="updatePostTitle" placeholder="Title">
-                <br>
-                <textarea type="text" id="updatePostBody" rows="5" columns="50" placeholder="Post"></textarea>
-                <br>
-                <input type="submit" id="updatePostButton" value="Update Post">
+                <input type="text" class="textBoxTitle" id="updatePostTitle" placeholder="Title">
+                <textarea type="text" id="updatePostBody" placeholder="Post"></textarea>
+                <input type="submit" class="submitButton" id="updatePostButton" value="Update Post">
             </form>
             <p id="updatePostStatus"></p>
         </article>
         <article>
             <h1>DELETE</h1>
             <form action="javascript:void(0)">
-                <input type="text" id="deletePostTitle" placeholder="Title">
-                <br>
-                <textarea type="text" id="deletePostBody" rows="5" columns="50" placeholder="Post"></textarea>
-                <br>
-                <input type="submit" id="deletePostButton" value="Delete Post">
+                <input type="text" class="textBoxTitle"  id="deletePostTitle" placeholder="Title">
+                <textarea type="text" id="deletePostBody" placeholder="Post"></textarea>
+                <input type="submit" class="submitButton" id="deletePostButton" value="Delete Post">
             </form>
             <p id="deletePostStatus"></p>
         </article>
-        <article>
+        <article id="getRequest">
             <h1>GET</h1>
             <p id="getPostStatus"></p>
             <div id="allPostsContainer"></div>
         </article>
-        <!-- <article>
-            <h1>BONUS: COMMENTS</h1>
-            <p id="getPostStatus"></p>
-        </article> -->
     </main>
     <footer>
         <p>Assignment W12B by Monica Tamang</p>

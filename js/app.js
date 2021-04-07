@@ -185,6 +185,9 @@ function getBlogPosts(e) {
                 eachPostContainer.innerHTML += postTitle;
                 eachPostContainer.innerHTML += postBody;
                 allPostsContainer.appendChild(eachPostContainer);
+
+                // Spacing out each sub-container on the page
+                eachPostContainer.style.margin = `5vh 0vh`;
             }
 
             // If the request was successful, don't print any message to the user
@@ -255,6 +258,10 @@ function getPostComments() {
                 eachCommentContainer.innerHTML += commentsName;
                 eachCommentContainer.innerHTML += commentsEmail;
                 eachCommentContainer.innerHTML += commentsBody;
+
+                // Spacing out the comments on the page and adding a border to see the grouping of posts & comments more clearly
+                eachCommentContainer.style.padding = `5vh 0vh`;
+                eachCommentContainer.style.borderBottom = `1px solid black`;
 
                 // Printing comments corresponding to each post to the page
                 post[i].append(eachCommentContainer);
