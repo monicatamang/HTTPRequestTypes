@@ -1,5 +1,6 @@
 // ---------- POST REQUEST ----------
 
+// Creating a function that will be called when the user clicks on the send post button
 function createBlogPost(e) {
     // Starting an AJAX request
     let ajax = new XMLHttpRequest();
@@ -7,10 +8,22 @@ function createBlogPost(e) {
     // Creating a function that must be called when the network request is done and no errors have occurred
     ajax.onreadystatechange = function() {
 
-        // If the request is done and an error has not occurred, it will print a success message to the user
+        // If the request is done and an error has not occurred, print a success message to the user
         if(this.readyState === 4 && this.status === 201) {
-            let statusMessage = document.getElementById(`statusUpdate`);
-            statusMessage.innerText = `The blog post was uploaded successfully.`;
+            let sendPostStatus = document.getElementById(`sendPostStatus`);
+            sendPostStatus.innerText = `The post was uploaded successfully.`;
+        } 
+        
+        // If the request is not done, print a loading message to the user
+        else if (this.readyState !== 4) {
+            let sendPostStatus = document.getElementById(`sendPostStatus`);
+            sendPostStatus.innerText = `Please wait... The post is being uploaded.`;
+        } 
+        
+        // If the request is done but has errored, print an error message to the user
+        else if(this.readyState === 4 && this.status !== 200) {
+            let sendPostStatus = document.getElementById(`sendPostStatus`);
+            sendPostStatus.innerText = `Sorry, something went wrong.`;
         }
     }
 
@@ -36,12 +49,13 @@ function createBlogPost(e) {
     ajax.send(postJSON);
 }
 
-// Adding a click event to the Blog Post button and calling the function to send user data to the server
+// Adding a click event to the send post button and calling the function to send the user's data to the server
 let sendPostButton = document.getElementById(`sendPostButton`);
 sendPostButton.addEventListener(`click`, createBlogPost);
 
 // ---------- PATCH REQUEST ----------
 
+// Creating a function that will be called when the user clicks on the update post button
 function updateBlogPost(e) {
 
     // Starting an AJAX request
@@ -50,9 +64,23 @@ function updateBlogPost(e) {
     // Creating a function that must be called when the network request is done and no errors have occurred
     ajax.onreadystatechange = function() {
 
-        // If the request is done and an error has not occurred, it will print a success message to the user
+        // If the request is done and an error has not occurred, console log the returned data to the console and print a success message to the user
         if(this.readyState === 4 && this.status === 200) {
             console.log(this.responseText);
+            let updatePostStatus = document.getElementById(`updatePostStatus`);
+            updatePostStatus.innerText = `The post was successfully updated.`;
+        }
+
+        // If the request is not done, print a loading message to the user
+        else if (this.readyState !== 4) {
+            let updatePostStatus = document.getElementById(`updatePostStatus`);
+            updatePostStatus.innerText = `Please wait... The post is being updated.`;
+        } 
+        
+        // If the request is done but has errored, print an error message to the user
+        else if(this.readyState === 4 && this.status !== 200) {
+            let updatePostStatus = document.getElementById(`updatePostStatus`);
+            updatePostStatus.innerText = `Sorry, something went wrong.`;
         }
     }
 
@@ -83,6 +111,7 @@ updatePostButton.addEventListener(`click`, updateBlogPost);
 
 // ---------- DELETE REQUEST ----------
 
+// Creating a function that will be called when the user clicks on the delete post button
 function deleteBlogPost(e) {
 
     // Starting an AJAX request
@@ -91,31 +120,30 @@ function deleteBlogPost(e) {
     // Creating a function that must be called when the network request is done and no errors have occurred
     ajax.onreadystatechange = function() {
 
-        // If the request is done and an error has not occurred, it will print a success message to the user
+        // If the request is done and an error has not occurred, console log the returned data to the console and print a success message o the user
         if(this.readyState === 4 && this.status === 200) {
             console.log(this.responseText);
+            let deletePostStatus = document.getElementById(`deletePostStatus`);
+            deletePostStatus.innerText = `The post was successfully deleted.`
+        }
+
+        // If the request is not done, print a loading message to the user
+        else if (this.readyState !== 4) {
+            let deletePostStatus = document.getElementById(`deletePostStatus`);
+            deletePostStatus.innerText = `Please wait... The post is being deleted.`;
+        } 
+        
+        // If the request is done but has errored, print an error message to the user
+        else if(this.readyState === 4 && this.status !== 200) {
+            let deletePostStatus = document.getElementById(`deletePostStatus`);
+            deletePostStatus.innerText = `Sorry, something went wrong.`;
         }
     }
 
     // Configuring the request with the type and URL
     ajax.open(`DELETE`, `https://jsonplaceholder.typicode.com/posts/1`, true);
 
-    // Defining that the data type being sent to the server is JSON
-    // ajax.setRequestHeader(`Content-Type`, `application/json`);
-
-    // Creating a JavaScript Object with the updated post title
-    // let deletePostTitle = document.getElementById(`deletePostTitle`).value;
-    // let deletePostBody = document.getElementById(`deletePostBody`).value;
-    // let deletePostObject = {
-    //     title: deletePostTitle,
-    //     body: deletePostBody
-    // };
-    
-    // Converting the JavaScript Object into JSON
-    // let deletePostJSON = JSON.stringify(deletePostObject);
-
     // Sending the request
-    // ajax.send(deletePostJSON);
     ajax.send();
 }
 
@@ -125,6 +153,7 @@ deletePostButton.addEventListener(`click`, deleteBlogPost);
 
 // ---------- GET REQUEST ----------
 
+// Creating a function that will be called as soon as the page is loaded
 function getBlogPosts(e) {
 
     // Starting an AJAX request
@@ -133,7 +162,7 @@ function getBlogPosts(e) {
     // Creating a function that must be called when the network request is done and no errors have occurred
     ajax.onreadystatechange = function() {
 
-        // If the request is done and an error has not occurred, it will print all blog posts on the page
+        // If the request is done and an error has not occurred, print all blog posts on the page
         if(this.readyState === 4 && this.status === 200) {
             let postObject = JSON.parse(this.responseText);
             for (let i = 0; i < postObject.length; i++) {
@@ -148,6 +177,21 @@ function getBlogPosts(e) {
                 postContainer.innerHTML += postTitle;
                 postContainer.innerHTML += postBody;
             }
+
+            let getPostStatus = document.getElementById(`getPostStatus`);
+            getPostStatus.innerText = ``;
+        }
+
+        // If the request is not done, print a loading message to the user
+        else if (this.readyState !== 4) {
+            let getPostStatus = document.getElementById(`getPostStatus`);
+            getPostStatus.innerText = `Loading...`;
+        } 
+        
+        // If the request is done but has errored, print an error message to the user
+        else if(this.readyState === 4 && this.status !== 200) {
+            let getPostStatus = document.getElementById(`getPostStatus`);
+            getPostStatus.innerText = `Sorry, something went wrong.`;
         }
     }
 
@@ -162,4 +206,5 @@ function getBlogPosts(e) {
 }
 
 // Adding a load event to the window and calling the function to update user data to the server
+// Note to Alex: I could just take the code out of the function so it can render on the page automatically but I decided to add an event listener to the window instead because in the notes, it says not to make ajax a global variable and it's always better to make it a local variable
 window.addEventListener(`load`, getBlogPosts);
