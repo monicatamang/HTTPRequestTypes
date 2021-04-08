@@ -217,7 +217,6 @@ function getBlogPosts(e) {
 // Note to Alex: I could just take the code out of the function so it can render on the page automatically but I decided to add an event listener to the window instead because in the notes, it says not to make ajax a global variable and that it's always better to make it a local variable
 window.addEventListener(`load`, getBlogPosts);
 
-
 // ---------- BONUS: COMMENTS ----------
 
 // Creating a function that will be called as soon as the page is loaded
@@ -238,7 +237,7 @@ function getPostComments() {
             // Getting the all post sub-containers
             let post = document.getElementsByClassName(`post`);
 
-            // Since the comments array length is greater than post array length, the conditional will only run when the counter is less than the post array length. This ensures that the same number of comments and posts are being printed to the user. It will error if the comment array length is used.
+            // Since the comments array length is longer than post array length, the conditional will only run when the counter is less than the post array length. This ensures that the same number of comments and posts are being printed to the user. It will error if the comment array length is used.
             for (let i = 0; i < post.length; i++) {
 
                 // Storing each value from the JS object into a variable
